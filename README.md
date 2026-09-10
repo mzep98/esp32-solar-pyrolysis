@@ -20,36 +20,24 @@ This repository houses the technical architecture, mechanical CAD models, and co
 | Deliverable | Format | Access Link | Description |
 | :--- | :--- | :--- | :--- |
 | **Android App Prototype** | Figma | [Launch Interactive Figma Prototype](https://www.figma.com/make/6u3JdHBM3GXaNequFB2ogl/Industrial-IoT-Mobile-Dashboard?fullscreen=1&t=DYqQNa4T4kU2sYYH-1&code-node-id=0-6) | Non-scrollable 5-screen Android UI prototype demonstrating real-time telemetry. |
-| **3D CAD Enclosure Model** | Tinkercad | Included in Repository | High-precision 3D mechanical model of the ESP32 control box and sensor ports (See Hardware section below). |
+| **3D CAD Enclosure Model** | Tinkercad | Included in Repository | High-precision 3D mechanical models of the ESP32 control box and core reactor (See Hardware section below). |
 
 ---
 
 ## ⚙️ System Architecture & Process Flow
 
-[ Raw Coconut Husk / Coir Dust ]
-               │
-               ▼
-┌──────────────────────────────┐       ┌──────────────────────────────┐
-│  Capacitive Moisture Sensor  │───────►│    ESP32 Microcontroller     │
-└──────────────────────────────┘       │  (Telemetry & Pulse Driver)  │
-                                       └──────────────┬───────────────┘
-                                                      │
-[ Solar Collector / Thermal ]                         │ BLE / Wi-Fi Streaming
-               │                                      ▼
-               ▼                       ┌──────────────────────────────┐
-┌──────────────────────────────┐       │   Android Companion App      │
-│ Stainless Steel Reactor Tube │       │   (Runs Time-Series ML Model)│
-│       (300°C – 700°C)        │       └──────────────┬───────────────┘
-└──────────────┬───────────────┘                      │
-               │                                      │ (Target RPM Command)
-               ▼                                      ▼
-┌──────────────────────────────┐       ┌──────────────────────────────┐
-│ K-Type Thermocouple +        │───────►│ NEMA 17 Stepper & Auger Feed │
-│ MAX6675 Cold-Junction Module │       │  (Adjusts Biomass Volume)    │
-└──────────────────────────────┘       └──────────────────────────────┘
-               │
-               ▼
-[ Clean Syngas / Biochar Output ]
+```mermaid
+graph TD
+    A[Raw Coconut Husk / Coir Dust] --> B(Capacitive Moisture Sensor)
+    B -->|Moisture Data| C[ESP32 Microcontroller]
+    D[Solar Collector / Thermal] --> E(Stainless Steel Reactor Tube: 300°C–700°C)
+    E --> F(K-Type Thermocouple + MAX6675)
+    F -->|Thermal Data| C
+    C <-->|BLE / Wi-Fi Streaming| G{Android Companion App <br> Time-Series ML Model}
+    G -->|Target RPM Command| H[NEMA 17 Stepper & Auger Feed]
+    H -->|Adjusts Biomass Feed Rate| E
+    E --> I[Clean Syngas & Biochar Output]
+```
 
 ---
 
@@ -63,13 +51,13 @@ The dynamic feed adjustment relies on a real-time time-series regression model r
 ---
 
 ## 🛠️ Mechanical & Enclosure CAD Models
-The control box housing the ESP32, A4988 driver, power regulation modules, and external sensor terminal blocks was modeled in 3D using Tinkercad.
+The physical components were modeled in 3D using Tinkercad to ensure precise mechanical fits for the ESP32 enclosure and the core reactor assembly.
 
-### Isometric Assembled View
+### Control Box (Isometric Assembled View)
 ![Control Box Isometric](./control_box_isometric.png)
 
-### Exploded Assembly View
-![Control Box Exploded Assembly](./control_box_exploded.png)
+### Core Reactor (Exploded Assembly View)
+![Core Reactor Exploded Assembly](./core_reactor_exploded.png)
 
 ---
 
@@ -91,7 +79,7 @@ The companion mobile dashboard was prototyped in Figma as a non-scrollable 5-scr
 
 * `README.md` - Primary repository overview and technical documentation
 * `control_box_isometric.png` - Tinkercad 3D render (Isometric view)
-* `control_box_exploded.png` - Tinkercad 3D render (Exploded assembly)
+* `core_reactor_exploded.png` - Tinkercad 3D render (Exploded assembly)
 * `figma_dashboard.png` - Figma mobile UI multi-screen preview
 
 *(Note: The full Innovation Proposal and Pitch Deck PDFs are submitted directly to the judging committee via email per competition guidelines).*
