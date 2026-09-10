@@ -1,36 +1,45 @@
 # Concentrated Solar Pyrolysis & ML Auger Control System
 
+![Competition](https://img.shields.io/badge/JA%20WE%20Challenge-2026%20National%20Submission-red)
+![Hardware](https://img.shields.io/badge/Hardware-ESP32%20|%20MAX6675%20|%20NEMA17-blue)
+![ML](https://img.shields.io/badge/ML-Time--Series%20Regression-orange)
+![UI](https://img.shields.io/badge/UI-Android%20Figma%20Prototype-green)
+![License](https://img.shields.io/badge/License-MIT-lightgray)
+
 > **JA WE Challenge Philippines 2026 Submission**  
 > *Concentrated Solar Pyrolysis and Syngas Reforming Engine with Machine Learning Auger Control for Bicol Coconut Husk and Coir Dust Residues*
 
 ---
 
 ## 📌 Executive Summary
-This repository serves as the centralized digital hub for our solar-thermal pyrolysis system proposal. The system utilizes an ESP32 microcontroller paired with a time-series regression model to dynamically regulate biomass auger feed rates, holding reactor temperatures within the optimal pyrolysis band (300°C–700°C) under fluctuating solar conditions.
+This repository houses the technical architecture, machine learning control logic, mechanical CAD models, and companion mobile application designs for an automated solar-thermal waste-to-energy unit. By combining concentrated solar-thermal collectors with an ESP32 edge microcontroller and a time-series regression model running on a companion Android app, the system dynamically regulates biomass auger feed rates to maintain the pyrolysis reactor within its optimal thermal band ($300^\circ\text{C}$–$700^\circ\text{C}$) under variable solar irradiance.
 
 ---
 
-## 🔗 Interactive Deliverables & Links
+## ⚙️ System Architecture & Process Flow
 
-* 📱 **Figma Interactive App Prototype:** [Launch Mobile UI Dashboard](https://www.figma.com/make/6u3JdHBM3GXaNequFB2ogl/Industrial-IoT-Mobile-Dashboard?fullscreen=1&t=DYqQNa4T4kU2sYYH-1&code-node-id=0-6)
-* 📄 **Innovation Proposal (PDF):** [View Innovation Proposal](./Innovation_Proposal_Badiong_Pelagio.pdf)
-* 📊 **Pitch Deck (PDF):** [View Pitch Deck Slides](./Pitch_Deck_Badiong_Pelagio.pdf)
-
----
-
-## 🛠️ Hardware & Mechanical Design
-
-### ESP32 Control Box (Isometric View)
-Houses the microcontroller, motor driver, and communication interfaces.
-![Control Box Isometric](./control_box_isometric.png)
-
-### Core Reactor (Exploded Assembly View)
-Illustrates the internal layers and structural breakdown of the thermal pyrolysis chamber.
-![Core Reactor Exploded View](./core_reactor_exploded.png)
-
----
-
-## 👥 Proponents & Acknowledgments
-* **Proponents:** Kaiser Francis L. Badiong & Marqus Szymon E. Pelagio
-* **Research Coach:** Engr. John Roy Galvez, CCPE, CRS
-* **Institution:** Camarines Sur National High School (STE Program)
+```text
+[ Raw Coconut Husk / Coir Dust ]
+               │
+               ▼
+┌──────────────────────────────┐       ┌──────────────────────────────┐
+│  Capacitive Moisture Sensor  │───────►│    ESP32 Microcontroller     │
+└──────────────────────────────┘       │  (Telemetry & Pulse Driver)  │
+                                       └──────────────┬───────────────┘
+                                                      │
+[ Solar Collector / Thermal ]                         │ BLE / Wi-Fi Streaming
+               │                                      ▼
+               ▼                       ┌──────────────────────────────┐
+┌──────────────────────────────┐       │   Android Companion App      │
+│ Stainless Steel Reactor Tube │       │   (Runs Time-Series ML Model)│
+│       (300°C – 700°C)        │       └──────────────┬───────────────┘
+└──────────────┬───────────────┘                      │
+               │                                      │ (Target RPM Command)
+               ▼                                      ▼
+┌──────────────────────────────┐       ┌──────────────────────────────┐
+│ K-Type Thermocouple +        │───────►│ NEMA 17 Stepper & Auger Feed │
+│ MAX6675 Cold-Junction Module │       │  (Adjusts Biomass Volume)    │
+└──────────────────────────────┘       └──────────────────────────────┘
+               │
+               ▼
+[ Clean Syngas / Biochar Output ]
