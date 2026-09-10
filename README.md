@@ -18,21 +18,15 @@ This repository serves as the centralized digital hub for our solar-thermal pyro
 
 ---
 
-## 🛠️ Hardware & Enclosure Design
-The ESP32 microcontroller, A4988 motor driver, and sensor interface circuits are housed in a custom enclosure designed in Tinkercad.
+## 🛠️ Hardware & Mechanical Design
 
-### Isometric Assembled View
-![Isometric View](./control_box_isometric.png)
+### ESP32 Control Box (Isometric View)
+Houses the microcontroller, motor driver, and communication interfaces.
+![Control Box Isometric](./control_box_isometric.png)
 
-### Exploded Assembly View
-![Exploded View](./control_box_exploded.png)
-
----
-
-## 📱 Mobile UI Architecture
-The companion Android interface displays real-time telemetry, historical trends, syngas production volume, and machine learning control states across 5 fixed screens.
-
-![Figma Mobile Dashboard](./figma_dashboard.png)
+### Core Reactor (Exploded Assembly View)
+Illustrates the internal layers and structural breakdown of the thermal pyrolysis chamber.
+![Core Reactor Exploded View](./core_reactor_exploded.png)
 
 ---
 
